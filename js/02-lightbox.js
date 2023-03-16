@@ -5,7 +5,7 @@ console.log(galleryItems);
 
 const galleryContainer = document.querySelector(".gallery")
 
-// galleryContainer.addEventListener('click', onPictureClick)
+galleryContainer.addEventListener('click', onPictureClick)
 
 galleryContainer.insertAdjacentHTML("beforeend", createGalleryMarkup(galleryItems));
 
@@ -13,25 +13,30 @@ function createGalleryMarkup(galleryItems) {
     return galleryItems.map(({description, original, preview}) => {
         return `
         <div class="gallery">
-            <a href="${original}">
-                <img src="${preview}" alt="${description}" title=""/>
-            </a>
+            <a class="gallery__item" href="${original}">
+            <img class="gallery__image" src="${preview}" alt="${description}"/>
+            </a> 
         </div>
         `;
     })
     .join("");
 };
  
-/*
-<div class="gallery">
-    <a href="images/image1.jpg">
-    <img src="images/thumbs/thumb1.jpg" 
-        alt="" 
-        title=""/></a>
+function onPictureClick(evt) {
+    evt.preventDefault();
+    if (evt.target.nodeName !== "IMG") {
+        return
+    }
+         handleModalWindow()
+};
+function handleModalWindow() {
+    let gallery = new SimpleLightbox('.gallery a');
+    
+    gallery.defaultOptions.captionsData = "alt";
+    console.log("🚀 ~ gallery.defaultOptions.captionsData:", gallery.defaultOptions.captionsData)
 
-    <a href="images/image2.jpg">
-    <img src="images/thumbs/thumb2.jpg" 
-    alt="" 
-    title="Beautiful Image"/></a>
-</div>
-*/
+    gallery.defaultOptions.captionDelay = 250;
+    console.log("🚀 ~ gallery.defaultOptions.captionDelay:", gallery.defaultOptions.captionDelay)
+  };
+
+    
