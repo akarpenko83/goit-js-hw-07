@@ -1,16 +1,10 @@
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
+
 const galleryContainer = document.querySelector(".gallery")
 
+galleryContainer.addEventListener('click', onPictureClick)
 
 galleryContainer.insertAdjacentHTML("beforeend", createGalleryMarkup(galleryItems));
-
-galleryContainer.addEventListener('clic', onPictureClick)
-
-function onPictureClick(evt) {
-    evt.preventDefault();
-    console.log(evt.currentTarget);
-};
 
 function createGalleryMarkup(galleryItems) {
     return galleryItems.map(({description, original, preview}) => {
@@ -29,4 +23,26 @@ function createGalleryMarkup(galleryItems) {
     })
     .join("");
  };
+function onPictureClick(evt) {
+    evt.preventDefault();
+    if (evt.target.nodeName !== "IMG") {
+        return
+    }
+    const imgLink = evt.target.dataset.source;
 
+    handleModalWindow(imgLink)
+};
+function handleModalWindow(link) {
+    const instance = basicLightbox.create(`
+    <img src="${link}">
+    `)
+    instance.show()
+
+    document.addEventListener('keydown', evt => {
+    if (evt.code !== "Escape") {
+        return;
+    }
+        instance.close();
+        document.removeEventListener('keydown', evt);
+    })
+};
