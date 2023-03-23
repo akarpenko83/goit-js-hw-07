@@ -1,11 +1,10 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-// import SimpleLightbox from '/node_modules/simplelightbox/simple-lightbox.js';
+
 console.log(galleryItems);
 
 const galleryContainer = document.querySelector(".gallery")
 
-galleryContainer.addEventListener('click', onPictureClick)
 
 galleryContainer.insertAdjacentHTML("beforeend", createGalleryMarkup(galleryItems));
 
@@ -22,21 +21,8 @@ function createGalleryMarkup(galleryItems) {
     .join("");
 };
  
-function onPictureClick(evt) {
-    evt.preventDefault();
-    if (evt.target.nodeName !== "IMG") {
-        return
-    }
-         handleModalWindow()
-};
-function handleModalWindow() {
-    let gallery = new SimpleLightbox('.gallery a');
-    
-    gallery.defaultOptions.captionsData = "alt";
-    console.log("🚀 ~ gallery.defaultOptions.captionsData:", gallery.defaultOptions.captionsData)
 
-    gallery.defaultOptions.captionDelay = 250;
-    console.log("🚀 ~ gallery.defaultOptions.captionDelay:", gallery.defaultOptions.captionDelay)
-  };
+    let gallery = new SimpleLightbox('.gallery a', { captionsData: "alt", captionDelay: 250 });
+
 
     
